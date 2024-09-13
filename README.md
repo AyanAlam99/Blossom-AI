@@ -91,6 +91,38 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 ```
+## Training
+The model is trained on the scaled training data for 10 epochs.
+```bash
+model.fit(X_train_scaled, y_train, epochs=10)
+```
+## Evaluation
+The model's performance is evaluated on the test set.
+```bash
+model.evaluate(X_test_scaled, y_test)
+```
+## Predictions
+The model makes predictions on the test set and demonstrates how data augmentation can improve the model's robustness.
+```bash
+import matplotlib.pyplot as plt
+
+# Data Augmentation
+data_augmentation = keras.Sequential([
+    layers.experimental.preprocessing.RandomFlip('horizontal', input_shape=(180, 180, 3)),
+    layers.experimental.preprocessing.RandomZoom(0.3),
+    layers.experimental.preprocessing.RandomRotation(0.2)
+])
+
+# Visualize augmented images
+plt.axis('off')
+plt.imshow(X[0])
+plt.axis('off')
+plt.imshow(data_augmentation(X)[0].numpy().astype('uint8'))
+```
+## Further Exploration
+- Experiment with different data augmentation techniques to improve model performance.
+- Adjust hyperparameters and model architecture for better results.
+
 
 
  
